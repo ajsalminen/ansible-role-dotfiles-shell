@@ -1,0 +1,12 @@
+---
+
+- name: Install packages
+  apt: pkg={{item}} state=present
+  with_items:
+    - python-pygments
+
+- name: Install default dircolors
+  shell: dircolors -p > ~/.dircolors
+
+- name: Copy dotfiles to place
+  copy: src=dotfiles/ dest=~/

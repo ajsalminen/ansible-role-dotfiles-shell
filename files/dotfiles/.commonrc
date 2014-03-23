@@ -1,0 +1,97 @@
+PATH=$PATH:~/drush/:~/opt/fasd/:~/bin
+EDITOR=emacsclient
+SUDO_EDITOR=emacsclient
+export GTAGSCONF=/usr/local/share/gtags/gtags.conf
+
+
+if [ "$TERM" != "dumb" ]; then
+    [ -e "$HOME/.dircolors" ] && DIR_COLORS="$HOME/.dircolors"
+    [ -e "$DIR_COLORS" ] || DIR_COLORS=""
+    eval "`dircolors -b $DIR_COLORS`"
+fi
+
+
+GRC=$(which grc)
+if [ "$TERM" != dumb ] && [ -n GRC ]
+then
+    alias colourify="$GRC -es --colour=auto"
+    alias configure='colourify ./configure'
+    alias diff='colourify diff'
+    alias make='colourify make'
+    alias gcc='colourify gcc'
+    alias g++='colourify g++'
+    alias as='colourify as'
+    alias gas='colourify gas'
+    alias ld='colourify ld'
+    alias netstat='colourify netstat'
+    alias ping='colourify ping'
+    alias traceroute6='colourify /usr/bin/traceroute6'
+    alias ps='colourify ps'
+    alias curl='colourify curl'
+    alias hexdump='colourify hexdump'
+fi
+
+create_and_edit() {
+DIR=$(dirname $1)
+if [ "$(dirname $1)" != "." ]
+then
+mkdir -p $DIR
+fi
+#touch $1
+emacsclient -n $1
+}
+alias ne=create_and_edit
+
+pretty_print_json() {
+cat $1 | python -mjson.tool | pygmentize -l javascript | less
+}
+alias ppj=pretty_print_json
+
+alias dud='du --max-depth=1 -h'
+alias duf='du -sh *'
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+
+alias grep="grep --color=always"
+alias ls="ls --color=always"
+alias less="less -R"
+alias e='emacsclient -n'
+
+alias t='tail -f'
+
+# because typing 'cd' is A LOT of work!!
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+
+
+# ls, the common ones I use a lot shortened for rapid fire usage
+alias ls='ls --color' #I like color
+alias l='ls -lFh'     #size,show type,human readable
+alias la='ls -lAFh'   #long list,show almost all,show type,human readable
+alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
+alias lt='ls -ltFh'   #long list,sorted by date,show type,human readable
+alias ll='ls -l'      #long list
+alias ldot='ls -ld .*'
+alias lS='ls -1FSsh'
+alias lart='ls -1Fcart'
+alias lrt='ls -1Fcrt'
+
+eval "$(fasd --init auto)"
+alias c='fasd_cd -d'
+# `-d` option present for bash completion
+# function fasd_cd is defined in posix-alias
+
+# search for commands
+alias cnf=/usr/lib/command-not-found
+alias g='/usr/bin/ag -i'
+# asdz all probably not needed from fasd and free to reuse, f is useful.
+source ~/ansible/hacking/env-setup
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Add rvm gems to the path
+#export PATH=$PATH:~/.gem/ruby/1.8/bin
