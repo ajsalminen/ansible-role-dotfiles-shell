@@ -47,6 +47,12 @@ cat $1 | python -mjson.tool | pygmentize -l javascript | less
 }
 alias ppj=pretty_print_json
 
+mosh_root() {
+    mosh root@"$*"
+}
+alias rs=mosh_root
+alias os=mosh
+
 alias dud='du --max-depth=1 -h'
 alias duf='du -sh *'
 alias fd='find . -type d -name'
