@@ -69,6 +69,8 @@ alias t='tail -f'
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias ls='ls --color'
 alias ll='ls -l'
+alias lsd='ls -d */'
+alias lsdh='ls -d .*/'
 
 eval "$(fasd --init auto)"
 alias c='fasd_cd -d'
