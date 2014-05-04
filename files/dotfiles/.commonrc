@@ -30,17 +30,29 @@ then
     alias curl='colourify curl'
     alias hexdump='colourify hexdump'
 fi
+# At least bash/zsh.
+ensure_dir(){
+dir="${1%/*}"
+if [ "$dir" != "$1" ]
+then
+mkdir -p $dir
+fi
+}
 
 create_and_edit() {
-DIR=$(dirname $1)
-if [ "$(dirname $1)" != "." ]
-then
-mkdir -p $DIR
-fi
-#touch $1
+ensure_dir $1
 emacsclient -n $1
 }
 alias ne=create_and_edit
+
+# Works in bash and zsh, makes mv/cp automatically create dirs if missing.
+mkdir_copy_or_move() {
+destination="${@: -1}"
+ensure_dir $destination
+"$@"
+}
+alias mv='mkdir_copy_or_move mv'
+alias cp='mkdir_copy_or_move cp'
 
 pretty_print_json() {
 cat $1 | python -mjson.tool | pygmentize -l javascript | less
@@ -69,9 +81,6 @@ alias t='tail -f'
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias ls='ls --color'
 alias ll='ls -l'
-alias lsd='ls -d */'
-alias lsdh='ls -d .*/'
-
 
 eval "$(fasd --init auto)"
 alias c='fasd_cd -d'
@@ -83,7 +92,6 @@ alias cnf=/usr/lib/command-not-found
 alias g='/usr/bin/ag -i'
 # asdz all probably not needed from fasd and free to reuse, f is useful.
 source /etc/profile.d/ansible.sh
-
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
