@@ -67,6 +67,7 @@ alias os=mosh
 alias vs='vagrant ssh'
 alias vp='vagrant provision'
 alias vu='vagrant up'
+alias vd='vagrant destroy'
 
 alias dud='du --max-depth=1 -h'
 alias duf='du -sh *'
