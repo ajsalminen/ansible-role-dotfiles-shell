@@ -43,7 +43,7 @@ create_and_edit() {
 ensure_dir $1
 emacsclient -n $1
 }
-alias ne=create_and_edit
+alias e=create_and_edit
 
 # Works in bash and zsh, makes mv/cp automatically create dirs if missing.
 mkdir_copy_or_move() {
@@ -78,7 +78,6 @@ alias ff='find . -type f -name'
 alias grep="grep --color=always"
 alias ls="ls --color=always"
 alias less="less -R"
-alias e='emacsclient -n'
 
 alias t='tail -f'
 
