@@ -4,9 +4,15 @@
   apt: pkg={{item}} state=present
   with_items:
     - python-pygments
+  sudo: yes
 
 - name: Install default dircolors
   shell: dircolors -p > ~/.dircolors
 
 - name: Copy dotfiles to place
   copy: src=dotfiles/ dest=~/
+
+- name: Clone scmbreeze from git
+  git: >
+    repo=https://github.com/ndbroadbent/scm_breeze.git
+    dest=~/opt/scm_breeze
