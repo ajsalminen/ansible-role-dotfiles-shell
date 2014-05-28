@@ -18,7 +18,7 @@ export git_setup_aliases="yes"
 # Git Index Config
 # ----------------------------------------------
 # Repos will be automatically added from this directory.
-export GIT_REPO_DIR="$HOME/code"
+export GIT_REPO_DIR="$HOME/projektit"
 # Add the full paths of any extra repos to GIT_REPOS, separated with ':'
 # e.g. "/opt/rails/project:/opt/rails/another project:$HOME/other/repo"
 export GIT_REPOS=""
@@ -29,7 +29,7 @@ git_index_alias="c"    # Switch to a repo in the (c)ode directory
 
 # Git Aliases
 # ----------------------------------------------
-git_alias="g"
+git_alias="gi"
 
 # 1. 'SCM Breeze' functions
 git_status_shortcuts_alias="gs"
