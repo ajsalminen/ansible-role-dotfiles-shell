@@ -63,6 +63,24 @@ mosh_root() {
     mosh root@"$*"
 }
 alias rs=mosh_root
+
+# From http://unix.stackexchange.com/questions/6463/find-searching-in-parent-directories-instead-of-subdirectories
+find-up() {
+  path=$(pwd)
+  while [[ "$path" != "" && ! -e "$path/$1" ]]; do
+    path=${path%/*}
+  done
+  echo "$path/$1"
+}
+
+ansible_vagrant_run() {
+ANSIBLE_HOST_KEY_CHECKING=false
+vagrantfile=$(find-up Vagrantfile)
+playbook=$(grep 'ansible.playbook' $vagrantfile | sed -e 's/^.*"\(.*\)".*$/\1/')
+ansible-playbook -i inventory  -s --u vagrant $playbook --ask-vault-pass --private-key=/home/anttis/.vagrant.d/insecure_private_key -l "$@"
+}
+
+alias va=ansible_vagrant_run
 alias os=mosh
 alias vs='vagrant ssh'
 alias vp='vagrant provision'
