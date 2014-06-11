@@ -70,14 +70,14 @@ find-up() {
   while [[ "$path" != "" && ! -e "$path/$1" ]]; do
     path=${path%/*}
   done
-  echo "$path/$1"
+  echo "$path/"
 }
 
 ansible_vagrant_run() {
 ANSIBLE_HOST_KEY_CHECKING=false
-vagrantfile=$(find-up Vagrantfile)
-playbook=$(grep 'ansible.playbook' $vagrantfile | sed -e 's/^.*"\(.*\)".*$/\1/')
-ansible-playbook -i inventory  -s --u vagrant $playbook --ask-vault-pass --private-key=/home/anttis/.vagrant.d/insecure_private_key -l "$@"
+vagrant_top=$(find-up Vagrantfile)
+playbook=$(grep 'ansible.playbook' ${vagrant_top}Vagrantfile | sed -e 's/^.*"\(.*\)".*$/\1/')
+ansible-playbook -i ${vagrant_top}inventory  -s --u vagrant $playbook --ask-vault-pass --private-key=/home/anttis/.vagrant.d/insecure_private_key -l "$@"
 }
 
 alias va=ansible_vagrant_run
