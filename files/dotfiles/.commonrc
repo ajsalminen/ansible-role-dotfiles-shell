@@ -113,6 +113,12 @@ alias c='fasd_cd -d'
 # search for commands
 alias cnf=/usr/lib/command-not-found
 alias g='/usr/bin/ag -i'
+
+php_drupalcs(){
+phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme $1
+}
+alias pcd=php_drupalcs
+
 # asdz all probably not needed from fasd and free to reuse, f is useful.
 source /etc/profile.d/ansible.sh
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
