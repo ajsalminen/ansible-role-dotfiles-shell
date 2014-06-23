@@ -18,4 +18,5 @@
     dest=~/opt/scm_breeze
 
 - name: Install gitjk
-  npm: name=gitjk
+  npm: name=gitjk global=yes
+  sudo: yes
