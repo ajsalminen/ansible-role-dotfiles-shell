@@ -16,3 +16,6 @@
   git: >
     repo=https://github.com/ndbroadbent/scm_breeze.git
     dest=~/opt/scm_breeze
+
+- name: Install gitjk
+  npm: name=gitjk
