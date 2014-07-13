@@ -135,3 +135,6 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # Alias for gitjk
 alias gitjk="history 10 | tail -r | gitjk_cmd"
+
+# Alias for faster work with ansible
+alias an="ansible-playbook -D  -i production site.yml --tags=$1 -l $2 --ask-vault-pass"
