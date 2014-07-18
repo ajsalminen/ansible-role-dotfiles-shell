@@ -141,3 +141,38 @@ alias an="ansible-playbook -D  -i production site.yml --tags=$1 -l $2 --ask-vaul
 
 # Update aliases for realiaser
 alias > ~/.alias.cache
+
+# Don't like this from the zsh debian plugin (use it for ansible-playbook)
+unalias ap
+
+passwords_pipe(){
+    while [ -f $pipelock ]
+    do
+        socat -u EXEC:"gpg -d $crypted" CREATE:$decrypted;
+    done
+}
+
+ansible_gpg_socat(){
+playbookpath=~/projektit/ansible/kifi-playbooks
+pipelock=/tmp/passwords_pipe.lock
+crypted=$playbookpath/vars/passwords.yml.gpg
+decrypted=$playbookpath/vars/passwords.yml
+
+
+touch $pipelock
+passwords_pipe &
+command=$1
+shift
+# bash/zsh and some others
+command $command $@
+rm $pipelock
+timeout 1 cat $decrypted > /dev/null # One more attempted read to make it exit
+
+}
+
+vagrant(){
+ansible_gpg_socat $0 $@
+}
+ansible_playbook(){
+ansible_gpg_socat $0 $@
+}
