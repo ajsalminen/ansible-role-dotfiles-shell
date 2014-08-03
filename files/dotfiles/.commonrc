@@ -134,7 +134,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [ -s "$HOME/opt/scm_breeze/scm_breeze.sh" ] && source "$HOME/opt/scm_breeze/scm_breeze.sh"
 
 # Alias for gitjk
-alias gitjk="history 10 | tail -r | gitjk_cmd"
+alias gitjk="history 10 | tac | gitjk_cmd"
 
 # Alias for faster work with ansible
 alias an="ansible-playbook -D  -i production site.yml --tags=$1 -l $2 --ask-vault-pass"
