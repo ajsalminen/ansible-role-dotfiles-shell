@@ -80,7 +80,7 @@ ANSIBLE_SSH_ARGS='-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o
 ANSIBLE_HOST_KEY_CHECKING=false
 vagrant_top=$(find-up Vagrantfile)
 playbook=$(grep 'ansible.playbook' ${vagrant_top}Vagrantfile | sed -e 's/^.*"\(.*\)".*$/\1/')
-ansible-playbook -i ${vagrant_top}inventory  -s --u vagrant $playbook --ask-vault-pass --private-key=/home/anttis/.vagrant.d/insecure_private_key -l "$@"
+ansible-playbook -i ${vagrant_top}inventory  -s --u vagrant $playbook --private-key=/home/anttis/.vagrant.d/insecure_private_key -l "$@"
 }
 
 alias va=ansible_vagrant_run
@@ -154,9 +154,10 @@ passwords_pipe(){
 
 ansible_gpg_socat(){
 playbookpath=~/projektit/ansible/kifi-playbooks
+pipepath=$playbookpath/.local/vars
 pipelock=/tmp/passwords_pipe.lock
-crypted=$playbookpath/vars/passwords.yml.gpg
-decrypted=$playbookpath/vars/passwords.yml
+crypted=$pipepath/passwords.yml.gpg
+decrypted=$pipepath/passwords.yml
 
 
 touch $pipelock
@@ -173,7 +174,7 @@ timeout 1 cat $decrypted > /dev/null # One more attempted read to make it exit
 vagrant(){
 ansible_gpg_socat $0 $@
 }
-ansible_playbook(){
+ansible-playbook(){
 ansible_gpg_socat $0 $@
 }
 
@@ -181,5 +182,5 @@ ansible_gpg_socat $0 $@
 # http://askubuntu.com/questions/457329/shutting-down-all-virtualbox-vagrant-vms-in-one-easy-to-use-bash-command-that
 reboot(){
 vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} VBoxManage controlvm {} savestate
-command reboot
+command sudo reboot
 }
