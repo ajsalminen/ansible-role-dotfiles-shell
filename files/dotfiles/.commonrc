@@ -55,9 +55,19 @@ ensure_dir $destination
 alias mv='mkdir_copy_or_move mv'
 alias cp='mkdir_copy_or_move cp'
 
-pretty_print_json() {
-cat $1 | python -mjson.tool | pygmentize -l javascript | less
+cat_url_or_file() {
+if [[ $1 == http://* || $1 == https://* ]]
+then
+curl $1
+else
+cat $1
+fi
 }
+
+pretty_print_json() {
+cat_url_or_file $1 | python -mjson.tool | pygmentize -l javascript | less
+}
+
 alias ppj=pretty_print_json
 
 mosh_root() {
