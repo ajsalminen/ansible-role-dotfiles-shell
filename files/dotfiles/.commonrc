@@ -1,4 +1,4 @@
-PATH=$PATH:~/drush/:~/opt/fasd/:~/bin
+PATH=$PATH:~/drush/:~/opt/fasd/:~/bin:~/opt/icdiff/
 EDITOR=emacsclient
 SUDO_EDITOR=emacsclient
 export GTAGSCONF=/usr/local/share/gtags/gtags.conf
@@ -194,3 +194,8 @@ reboot(){
 vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} VBoxManage controlvm {} savestate
 command sudo reboot
 }
+
+# nice idea from https://github.com/ElijahLynn/dotfiles/blob/master/home/.bash_aliases
+# Make a sound for when commands finish.
+export tada='/home/elijah/bin/sounds/TaDa.ogg'
+alias a='paplay $tada'
